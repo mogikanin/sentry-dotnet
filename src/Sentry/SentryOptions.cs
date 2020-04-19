@@ -211,6 +211,11 @@ namespace Sentry
         public Func<SentryEvent, SentryEvent> BeforeSend { get; set; }
 
         /// <summary>
+        /// A callback to invoke after successful sending an event to Sentry.
+        /// </summary>
+        public Action<SentryEvent> AfterSend { get; set; }
+
+        /// <summary>
         /// A callback invoked when a breadcrumb is about to be stored.
         /// </summary>
         /// <remarks>

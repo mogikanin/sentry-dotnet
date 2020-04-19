@@ -52,6 +52,15 @@ namespace Sentry.Internal.Http
                 var responseId = JsonSerializer.DeserializeObject<SentrySuccessfulResponseBody>(body)?.id;
                 Debug.Assert(@event.EventId.ToString() == responseId);
 #endif
+                _options.DiagnosticLogger?.LogDebug("Calling the AfterSend callback");
+                try
+                {
+                    _options.AfterSend?.Invoke(@event);
+                }
+                catch (Exception e)
+                {
+                    _options.DiagnosticLogger?.LogError("The AfterSend callback threw an exception.", e);
+                }
                 return;
             }
 
